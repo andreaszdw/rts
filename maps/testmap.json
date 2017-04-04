@@ -2,7 +2,7 @@
  "layers":[
         {
          "height":0,
-         "image":"..\/images\/test-map2560x2560-vers2.png",
+         "image":"/images/test-map2560x2560-vers2.png",
          "name":"background",
          "opacity":1,
          "type":"imagelayer",

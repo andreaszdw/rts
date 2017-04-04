@@ -8,10 +8,10 @@
 #------------------------------------------------------------------------------
 
 import pyglet
-import math
 
 import view
 import infoconsole
+import tilemap
 
 #-------------------------------------------------------------------------------
 class PlayState(object):
@@ -99,7 +99,8 @@ class PlayState(object):
     #-------------------------------------------------------
     def loadLevel(self, level=None):
 
-        pass
+        # the map
+        self.map = tilemap.Map("maps/testmap.json")
 
     #-------------------------------------------------------
     def key_press(self, win, symbol, modifierers):
