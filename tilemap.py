@@ -79,7 +79,6 @@ class Map(object):
 
             tileX = int(x // self.tileWidth)
             tileY = int(y // self.tileHeight)
-            print tileX, tileY
 
         else:
 
@@ -93,11 +92,16 @@ class Map(object):
 
         tileX, tileY = self.xyToMapTile(x, y)
 
+        #return tileX, tileY
+        
         if (tileX != None) and (tileY != None):
 
-            if tileX < 0: return False
-            if tileY < 0: return False
-            if tileX > self.xTiles - 1: return False
-            if tileY > self.yTiles - 1: return False
+            if tileX < 0: return False, False
+            if tileY < 0: return False, False
+            if tileX > self.xTiles - 1: return False, False
+            if tileY > self.yTiles - 1: return False, False
+
+            tmpTile = self.tiles[tileX*self.xTiles+(self.yTiles-tileY)]
+            print tmpTile
 
             return tileX, tileY

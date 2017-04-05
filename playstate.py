@@ -68,6 +68,11 @@ class PlayState(object):
         self.scrollLeftRight = 0
         self.scrollUpDown = 0
 
+        # cursor
+        self.cursor = False
+        self.cursorX = 0
+        self.cursorY = 0
+
         # dragging
         self.drag = False
         self.dragStartX = 0
@@ -144,6 +149,13 @@ class PlayState(object):
             else:
                 self.infoOn = True
 
+        # toggle cursor
+        if symbol == pyglet.window.key.C:
+            if self.cursor:
+                self.cursor = False
+            else:
+                self.cursor = True
+
         if self.paused:
             return
 
@@ -191,7 +203,10 @@ class PlayState(object):
 
         self.mouseToViewCoord()
 
-        print self.map.getTileFromXY(self.mouseViewX, self.mouseViewY)
+        tmpX, tmpY = self.map.getTileFromXY(self.mouseViewX, self.mouseViewY)
+
+        self.cursorX = tmpX*self.map.tileHeight
+        self.cursorY = tmpY*self.map.tileWidth
 
     #-------------------------------------------------------
     def mouse_press(self, win, x, y, button, modifiers):
@@ -337,6 +352,9 @@ class PlayState(object):
 
         if self.drag:
             self.drawRect(self.dragStartX, self.dragStartY, self.dragX, self.dragY, (255, 255, 0, 128))
+
+        if self.cursor:
+            self.drawRect(self.cursorX, self.cursorY, self.cursorX+self.map.tileWidth, self.cursorY+self.map.tileHeight, (255, 0, 0, 255))
 
         # resetView, für fps etc..
         self.view.reset()
