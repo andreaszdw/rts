@@ -76,7 +76,7 @@ class PlayState(object):
         self.dragY = 0
 
         # view
-        self.view = view.View(x=0, y=0, win=win, maxScale=10, minScale=1)
+        self.view = view.View(x=0, y=0, win=win, maxScale=3, minScale=1)
 
         # scale speed
         self.scaleSpeed = 0.1
@@ -91,6 +91,9 @@ class PlayState(object):
 
         self.gameObjects = []
 
+        # the map
+        self.map = tilemap.Map()
+
         self.loadLevel()
 
         # now drawing is allowed
@@ -100,7 +103,9 @@ class PlayState(object):
     def loadLevel(self, level=None):
 
         # the map
-        self.map = tilemap.Map("maps/testmap.json")
+        self.map.loadFile("maps/testmap.json", self.batch)
+
+        self.view.setXY(self.map.mapWidth//2, self.map.mapHeight//2)
 
     #-------------------------------------------------------
     def key_press(self, win, symbol, modifierers):
@@ -186,6 +191,8 @@ class PlayState(object):
 
         self.mouseToViewCoord()
 
+        print self.map.getTileFromXY(self.mouseViewX, self.mouseViewY)
+
     #-------------------------------------------------------
     def mouse_press(self, win, x, y, button, modifiers):
 
@@ -242,24 +249,24 @@ class PlayState(object):
         # view.x berechnen und überprüfen, dass es noch zu sehen ist
         self.view.x += self.scrollLeftRight*self.scrollSpeed*dt
 
-        '''if self.view.x > self.map.mapWidth:
+        if self.view.x > self.map.mapWidth:
 
             self.view.x = self.map.mapWidth
 
         if self.view.x < 0:
 
-            self.view.x = 0'''
+            self.view.x = 0
 
         # view.y berechnen und überprüfen, dass es noch zu sehen ist
         self.view.y += self.scrollUpDown*self.scrollSpeed*dt
 
-        '''if self.view.y > self.map.mapHeight:
+        if self.view.y > self.map.mapHeight:
 
             self.view.y = self.map.mapHeight
 
         if self.view.y < 0:
 
-            self.view.y = 0'''
+            self.view.y = 0
 
         self.mouseToViewCoord()
 

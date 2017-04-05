@@ -24,44 +24,80 @@ class TileUnit(object):
 class Map(object):
 
     #------------------------------------------------------
-    def __init__(self, fileName="", backgroundImage="", xTiles="", yTiles="", tileWidth="", tileHeight=""):
+    def __init__(self):
 
-        self.fileName = fileName
-        self.backgroundImage = backgroundImage
-        self.xTiles = xTiles
-        self.yTiles = yTiles
-        self.tileWidth = tileWidth
-        self.tileHeight = tileHeight
+        self.bgImage = None
+        self.bgSprite = None
+        
+        self.xTiles = 0
+        self.yTiles = 0
+        self.tileWidth = 0
+        self.tileHeight = 0
+
+        self.mapWidth = 0
+        self.mapHeight = 0
 
         self.tiles = []
         self.tileSet = []
 
-        self.loadFile(self.fileName)
-
     #------------------------------------------------------
-    def loadFile(self, file):
+    def loadFile(self, filename, batch):
 
-        f = open(self.fileName).read()
+        # open the file and load the json
+        f = open(filename).read()
         tmpData = json.loads(f)
-        
-        self.backgroundImage = tmpData["layers"][0]["image"]
-        print self.backgroundImage
 
+        # load the bg image
+        self.bgImage = pyglet.image.load(tmpData["layers"][0]["image"])
+        self.bgSprite = pyglet.sprite.Sprite(self.bgImage, batch=batch)
+        
+        # load the number of tiles
         self.xTiles = tmpData["layers"][1]["height"]
         self.yTiles = tmpData["layers"][1]["width"]
 
-        print "%d x %d tiles" % (self.xTiles, self.yTiles)
-
+        # load the size of the tiles
         self.tileWidth = tmpData["tilewidth"]
         self.tileHeight = tmpData["tileheight"]
-        print "%d x %d tilesize" % (self.tileWidth, self.tileHeight)
 
+        # calculate the size of the map
+        self.mapWidth = self.xTiles * self.tileWidth
+        self.mapHeight = self.yTiles * self.tileHeight
+
+        # load the tile data
         self.tiles = tmpData["layers"][1]["data"]
-        #print self.tiles
 
+        # load the single tile infos
         for i in range(len(tmpData["tilesets"][0]["tileproperties"])):
 
             tmpId = i+1
             self.tileSet.append(TileUnit(name=tmpData["tilesets"][0]["tileproperties"][str(i)]["type"], id=tmpId))
 
-            print self.tileSet[i].name, self.tileSet[i].id
+    #------------------------------------------------------
+    def xyToMapTile(self, x, y):
+
+        if self.tileWidth and self.tileHeight:
+
+            tileX = int(x // self.tileWidth)
+            tileY = int(y // self.tileHeight)
+            print tileX, tileY
+
+        else:
+
+            return None, None
+
+        return tileX, tileY
+
+
+    #------------------------------------------------------
+    def getTileFromXY(self, x, y):
+
+        tileX, tileY = self.xyToMapTile(x, y)
+
+        if (tileX != None) and (tileY != None):
+
+            if tileX < 0: return False
+            if tileY < 0: return False
+            if tileX > self.xTiles - 1: return False
+            if tileY > self.yTiles - 1: return False
+
+            return tileX, tileY
