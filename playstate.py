@@ -208,6 +208,8 @@ class PlayState(object):
         self.cursorX = tmpX*self.map.tileHeight
         self.cursorY = tmpY*self.map.tileWidth
 
+        print tmpX, tmpY
+
     #-------------------------------------------------------
     def mouse_press(self, win, x, y, button, modifiers):
 
@@ -334,6 +336,34 @@ class PlayState(object):
         self.drawLine(x2, y2, x, y2, color)
         self.drawLine(x, y2, x, y, color)
 
+    #-------------------------------------------------------
+    def drawRouteAStar(self, start, end, value):
+
+        # draw Start Rect
+        self.drawRect(start[0]*self.map.tileWidth, 
+                      start[1]*self.map.tileHeight,
+                      start[0]*self.map.tileWidth+self.map.tileWidth, 
+                      start[1]*self.map.tileHeight+self.map.tileHeight,
+                    (0, 0, 255, 255))
+
+        # test astar
+        route = self.map.astar(start, end, value)
+        
+        for r in route:
+
+            self.drawRect(r[0]*self.map.tileWidth, 
+                          r[1]*self.map.tileHeight,
+                          r[0]*self.map.tileWidth+self.map.tileWidth, 
+                          r[1]*self.map.tileHeight+self.map.tileHeight,
+                      (255, 255, 0, 255))
+
+
+        self.drawRect(end[0]*self.map.tileWidth, 
+                      end[1]*self.map.tileHeight,
+                      end[0]*self.map.tileWidth+self.map.tileWidth, 
+                      end[1]*self.map.tileHeight+self.map.tileHeight,
+                      (0, 255, 0, 255))
+
 
     #-------------------------------------------------------
     def draw(self, win):
@@ -355,6 +385,9 @@ class PlayState(object):
 
         if self.cursor:
             self.drawRect(self.cursorX, self.cursorY, self.cursorX+self.map.tileWidth, self.cursorY+self.map.tileHeight, (255, 0, 0, 255))
+
+        # for testing
+        self.drawRouteAStar((23, 23), (64, 35), 2)
 
         # resetView, für fps etc..
         self.view.reset()
