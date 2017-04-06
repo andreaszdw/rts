@@ -203,7 +203,7 @@ class PlayState(object):
 
         self.mouseToViewCoord()
 
-        tmpX, tmpY = self.map.getTileFromXY(self.mouseViewX, self.mouseViewY)
+        tmpX, tmpY = self.map.xyToMapTile(self.mouseViewX, self.mouseViewY)
 
         self.cursorX = tmpX*self.map.tileHeight
         self.cursorY = tmpY*self.map.tileWidth

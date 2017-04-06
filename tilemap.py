@@ -73,6 +73,8 @@ class Map(object):
             self.tileSet.append(TileUnit(name=tmpData["tilesets"][0]["tileproperties"][str(i)]["type"], id=tmpId))
 
     #------------------------------------------------------
+    # returns the tile in x, y from coordinates
+    #------------------------------------------------------
     def xyToMapTile(self, x, y):
 
         if self.tileWidth and self.tileHeight:
@@ -86,13 +88,12 @@ class Map(object):
 
         return tileX, tileY
 
-
+    #------------------------------------------------------
+    # returns the value of the tile form coordinates
     #------------------------------------------------------
     def getTileFromXY(self, x, y):
 
         tileX, tileY = self.xyToMapTile(x, y)
-
-        #return tileX, tileY
         
         if (tileX != None) and (tileY != None):
 
@@ -101,7 +102,6 @@ class Map(object):
             if tileX > self.xTiles - 1: return False, False
             if tileY > self.yTiles - 1: return False, False
 
-            tmpTile = self.tiles[tileX*self.xTiles+(self.yTiles-tileY)]
-            print tmpTile
+            tmpTile = self.tiles[tileX+(self.yTiles-1-tileY)*self.yTiles]
 
-            return tileX, tileY
+            return tmpTile
