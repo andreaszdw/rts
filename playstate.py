@@ -80,6 +80,11 @@ class PlayState(object):
         self.dragX = 0
         self.dragY = 0
 
+        # test paht
+        self.showPath = False
+        self.startPath = (0, 0)
+        self.endPath = (0, 0)
+
         # view
         self.view = view.View(x=0, y=0, win=win, maxScale=3, minScale=1)
 
@@ -156,6 +161,13 @@ class PlayState(object):
             else:
                 self.cursor = True
 
+        # toggle showPath
+        if symbol == pyglet.window.key.S:
+            if self.showPath:
+                self.showPath = False
+            else:
+                self.showPath = True
+
         if self.paused:
             return
 
@@ -208,8 +220,6 @@ class PlayState(object):
         self.cursorX = tmpX*self.map.tileHeight
         self.cursorY = tmpY*self.map.tileWidth
 
-        print tmpX, tmpY
-
     #-------------------------------------------------------
     def mouse_press(self, win, x, y, button, modifiers):
 
@@ -222,14 +232,29 @@ class PlayState(object):
         self.mouseToViewCoord() # windowkoordinaten in viewkoordinaten umrechnen
 
 
-        if button == pyglet.window.mouse.LEFT:
+        if button == pyglet.window.mouse.LEFT and self.lShift == False:
 
             #dragging
             self.dragStartX = self.mouseViewX
             self.dragStartY = self.mouseViewY
 
+
+        # test path
+        if button == pyglet.window.mouse.LEFT and self.lShift == True:
+
+            self.showPath = True
+
+            tmpX, tmpY = self.map.xyToMapTile(self.mouseViewX, self.mouseViewY)
+
+            self.startPath = (tmpX, tmpY)
+
     #-------------------------------------------------------
     def mouse_release(self, win, x, y, button, modifiers):
+
+        self.mouseX = x
+        self.mouseY = y
+
+        self.mouseToViewCoord()
 
         if button == pyglet.window.mouse.LEFT:
 
@@ -238,6 +263,14 @@ class PlayState(object):
             self.dragStartY = 0
             self.dragX = 0
             self.dragY = 0
+
+        # test path
+        if button == pyglet.window.mouse.LEFT and self.lShift == True:
+
+            tmpX, tmpY = self.map.xyToMapTile(self.mouseViewX, self.mouseViewY)
+
+            self.endPath = (tmpX, tmpY)
+
 
 
     #-------------------------------------------------------
@@ -252,10 +285,22 @@ class PlayState(object):
     #------------------------------------------------------
     def mouse_drag(self, win, x, y, dx, dy, button, modifiers):
 
-        if button == pyglet.window.mouse.LEFT:
+        self.mouseX = x
+        self.mouseY = y
+
+        self.mouseToViewCoord()
+
+        if button == pyglet.window.mouse.LEFT and self.lShift == False:
 
             self.drag = True
             self.dragX, self.dragY = self.xyToViewCoord(x, y)
+
+        # test path
+        if button == pyglet.window.mouse.LEFT and self.lShift == True:
+
+            tmpX, tmpY = self.map.xyToMapTile(self.mouseViewX, self.mouseViewY)
+
+            self.endPath = (tmpX, tmpY)
 
     #-------------------------------------------------------
     def update(self, win, dt):
@@ -387,7 +432,8 @@ class PlayState(object):
             self.drawRect(self.cursorX, self.cursorY, self.cursorX+self.map.tileWidth, self.cursorY+self.map.tileHeight, (255, 0, 0, 255))
 
         # for testing
-        self.drawRouteAStar((23, 23), (64, 35), 2)
+        if self.showPath:
+            self.drawRouteAStar(self.startPath, self.endPath, (2, 3))
 
         # resetView, für fps etc..
         self.view.reset()

@@ -46,7 +46,7 @@ class MainWindow(pyglet.window.Window):
     def changeState(self, state):
 
         if(not self.stack.empty()):
-            self.stack.top().cleanup()
+            self.stack.top().Bcleanup()
             self.stack.pop()
 
         self.stack.push(state)

@@ -112,7 +112,7 @@ class Map(object):
         return (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2
 
     #------------------------------------------------------
-    def astar(self, start, goal, value):
+    def astar(self, start, goal, values):
 
         neighbors = [(0,1),(0,-1),(1,0),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
 
@@ -141,7 +141,9 @@ class Map(object):
                 tentative_g_score = gscore[current] + self.heuristic(current, neighbor)
                 if 0 <= neighbor[0] < self.xTiles:
                     if 0 <= neighbor[1] < self.yTiles:
-                        if self.tiles[neighbor[0]+(self.yTiles-1-neighbor[1])*self.yTiles] != value:
+                        '''if self.tiles[neighbor[0]+(self.yTiles-1-neighbor[1])*self.yTiles] != value:
+                            continue'''
+                        if not self.checkForContinue(self.tiles[neighbor[0]+(self.yTiles-1-neighbor[1])*self.yTiles], values):
                             continue
                     else:
                         # array bound y walls
@@ -160,3 +162,14 @@ class Map(object):
                     heappush(oheap, (fscore[neighbor], neighbor))
 
         return []
+
+    #------------------------------------------------------
+    def checkForContinue(self, tile, values):
+
+        for v in values:
+
+            print v
+
+            if tile == v: return True
+
+        return False
