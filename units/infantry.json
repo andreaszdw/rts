@@ -1,0 +1,19 @@
+{ 
+        "name": "Regular Infantry",
+        "image": "images/infantry/animations.png",
+        "animations": 
+        [{       
+                "name": "walk",
+                "anchor_x": 3,
+                "anchor_y": 3,
+                "frames": 3,
+                "duration": 0.3
+        },
+        {       
+                "name": "running",
+                "anchor_x": 3,
+                "anchor_y": 3,
+                "frames": 3,
+                "duration": 0.1
+        }]
+}

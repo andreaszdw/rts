@@ -1,14 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# helper.py
+#
+# some helper functions
+#
+#------------------------------------------------------------------------------
+
 import pyglet
 from pyglet.image import Animation, AnimationFrame
-import gameobject
 
 
 # this creates an animation sequence for an sprite
+#
 #------------------------------------------------------------------------------
-def createAnimation(image=None, columns=0, rows=0, anchor_x=0, anchor_y=0):
+def createAnimation(image=None, columns=0, rows=0, anchor_x=0, anchor_y=0, duration=0):
     #effect_seq = pyglet.image.ImageGrid(pyglet.image.load(image_name), rows, columns)
     effect_seq = pyglet.image.ImageGrid(image, rows, columns)
     effect_frames = []
@@ -18,7 +24,7 @@ def createAnimation(image=None, columns=0, rows=0, anchor_x=0, anchor_y=0):
         for effect_frame in effect_seq[start:end:1]:
             effect_frame.anchor_x = anchor_x
             effect_frame.anchor_y = anchor_y
-            effect_frames.append(AnimationFrame(effect_frame, 0.3))
+            effect_frames.append(AnimationFrame(effect_frame, duration))
 
     #effect_frames[(rows * columns) -1].duration = None
     return Animation(effect_frames)

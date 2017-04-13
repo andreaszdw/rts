@@ -12,6 +12,7 @@ import pyglet
 import view
 import infoconsole
 import tilemap
+import infantry
 
 #-------------------------------------------------------------------------------
 class PlayState(object):
@@ -86,15 +87,15 @@ class PlayState(object):
         self.endPath = (0, 0)
 
         # view
-        self.view = view.View(x=0, y=0, win=win, maxScale=3, minScale=1)
+        self.view = view.View(x=0, y=0, win=win, maxScale=5, minScale=0.5)
 
         # scale speed
         self.scaleSpeed = 0.1
 
         pyglet.gl.glClearColor(0.0, 0.0, 0.0, 1.0)
 
-        self.batch = pyglet.graphics.Batch()
-        self.batchUnits = pyglet.graphics.Batch()
+        self.bgBatch = pyglet.graphics.Batch()
+        self.fgBatch = pyglet.graphics.Batch()
 
         # info console
         self.info = infoconsole.InfoConsole("", x=10, y=win.height-25, width=300)
@@ -113,9 +114,11 @@ class PlayState(object):
     def loadLevel(self, level=None):
 
         # the map
-        self.map.loadFile("maps/testmap.json", self.batch)
+        self.map.loadFile("maps/testmap.json", self.bgBatch)
 
         self.view.setXY(self.map.mapWidth//2, self.map.mapHeight//2)
+
+        self.ti = infantry.Infantry(self.fgBatch, "units/infantry.json")
 
     #-------------------------------------------------------
     def key_press(self, win, symbol, modifierers):
@@ -421,9 +424,9 @@ class PlayState(object):
         # setView, mit scaling und viewpoint
         self.view.camera()
 
-        self.batch.draw()
+        self.bgBatch.draw()
 
-        self.batchUnits.draw()
+        self.fgBatch.draw()
 
         if self.drag:
             self.drawRect(self.dragStartX, self.dragStartY, self.dragX, self.dragY, (255, 255, 0, 128))
