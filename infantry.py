@@ -38,10 +38,15 @@ class Infantry(gameobject.GameObject):
 
         for a in tmpData["animations"]:
 
-            self.animations.append(helper.createAnimation(self.image,a["frames"], 1, 
+            helper.animationByList(self.image, a["frames"])
+
+
+
+
+            '''self.animations.append(helper.createAnimation(self.image,a["frames"], 1, 
                                                           a["anchor_x"], 
                                                           a["anchor_y"],
-                                                          a["duration"]))
+                                                          a["duration"]))'''
 
 
         '''self.animations.append(helper.createAnimation(self.image,tmpData["animations"][0]["frames"], 1, 
@@ -49,7 +54,7 @@ class Infantry(gameobject.GameObject):
                                                       tmpData["animations"][0]["anchor_y"],
                                                       tmpData["animations"][0]["duration"]))'''
 
-        self.sprite = pyglet.sprite.Sprite(self.animations[1], batch=self.batch, x=2560//2, y=2560//2)
+        #self.sprite = pyglet.sprite.Sprite(self.animations[1], batch=self.batch, x=2560//2, y=2560//2)
 
     #------------------------------------------------------
     def update(dt):

@@ -29,6 +29,18 @@ def createAnimation(image=None, columns=0, rows=0, anchor_x=0, anchor_y=0, durat
     #effect_frames[(rows * columns) -1].duration = None
     return Animation(effect_frames)
 
+
+#------------------------------------------------------------------------------
+def animationByList(image=None, aniList=[]):
+
+    effect_frames=[]
+
+    print aniList
+
+    #for v in aniList:
+
+        #print v#, f["y"], f["w"], f["h"], f["anchor_x"], f["anchor_y"], f["duration"]
+
 #------------------------------------------------------------------------------
 class unitsList(object):
 
