@@ -32,5 +32,36 @@
                         "anchor_y": 3,
                         "duration": 0.3
                 }]
+        },
+        {       
+                "name": "run",
+                "frames":
+                [{
+                        "x": 0,
+                        "y": 0,
+                        "w": 5,
+                        "h": 6,
+                        "anchor_x": 3,
+                        "anchor_y": 3,
+                        "duration": 0.1 
+                },
+                {
+                        "x": 6,
+                        "y": 0,
+                        "w": 5,
+                        "h": 6,
+                        "anchor_x": 3,
+                        "anchor_y": 3,
+                        "duration": 0.1
+                },
+                {
+                        "x": 0,
+                        "y": 7,
+                        "w": 5,
+                        "h": 6,
+                        "anchor_x": 3,
+                        "anchor_y": 3,
+                        "duration": 0.1
+                }]
         }]
 }
