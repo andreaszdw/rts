@@ -35,11 +35,17 @@ def animationByList(image=None, aniList=[]):
 
     effect_frames=[]
 
-    print aniList
+    tmpImageY = image.height
+    print tmpImageY
 
-    #for v in aniList:
+    for f in aniList:
 
-        #print v#, f["y"], f["w"], f["h"], f["anchor_x"], f["anchor_y"], f["duration"]
+        tmpFrame = image.get_region(f["x"], f["y"], f["w"], f["h"])
+        tmpFrame.anchor_x = f["anchor_x"]
+        tmpFrame.anchor_y = f["anchor_y"]
+        effect_frames.append(AnimationFrame(tmpFrame, f["duration"]))
+
+    return Animation(effect_frames)
 
 #------------------------------------------------------------------------------
 class unitsList(object):
