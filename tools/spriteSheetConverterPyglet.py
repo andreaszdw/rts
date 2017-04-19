@@ -1,5 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import sys
 import string
+import pyglet
+import os
 
 '''infoString = """Gebrauch: 
 
@@ -8,6 +13,9 @@ import string
 
 	Aus der txt-Datei wird eine json-Datei erstellt, die mit pyglet importiert wird.
 	hierbei muss beachtet werden, das y von unten nach oben geht.
+
+	Die ssp Textdatei und die dazugehörige png-datei muss im gleichen Verzeichnis sein,
+	damit die Umrechnung der y-Koordinate erfolgen kann.
 	"""
 if len(sys.argv) < 2:
 
@@ -17,54 +25,51 @@ if len(sys.argv) < 2:
 
 filename = sys.argv[1]'''
 
-f=open("infantry.txt", "r")
+filename = "infantry.txt"
 
-result = "{\n"
+f=open(filename, "r")
+
+imageName = os.path.splitext(filename)[0] + ".png"
+
+image = pyglet.image.load(imageName)
+
+imageHeight = image.height
+
+
+result = "{"
 
 data = []
 lines = f.readlines()
-for line in lines:
-	#tmpData = []
-	#tmpData.append(line.split())
+for line in lines:	
 	data.append(line.split())
 
-print data
+# check for first time iter, because of the correct comma setting
+tmpFirstTime = True
 
-'''for i in range(len(data)):
-	result += "\t\t{\n"
-	result += "\t\t\t-- " + data[i][0] + "\n"
-	result += "\t\t\tx=" + data[i][2] + ",\n"
-	result += "\t\t\ty=" + data[i][3] + ",\n"
-	result += "\t\t\twidth=" + data[i][4] + ",\n"
-	result += "\t\t\theight=" + data[i][5] + ",\n"
-	result += "\t\t},\n"
+for i in data:
 
-result += "\t},\n"
-result += "}\n"
+	if tmpFirstTime:
+		result += "\n\t\"" + i[0] + "\"" + ":\n"
+	else:
+		result += ",\n\t" + "\"" + i[0] + "\"" + ":\n"
+	result += "\t{\n"
+	result += "\t\t\"" + "x" + "\": " +  i[2] + ",\n"
 
-result += "\nSheetInfo.frameIndex =\n"
-result += "{\n"
+	# do y conversion to opengl coordinates
+	tmpY = imageHeight - int(i[3]) - int(i[5])
+	result += "\t\t\"" + "y" + "\": " + str(tmpY) + ",\n"
 
-for i in range(len(data)):
-    
-    result += "\t" + "[\"" + data[i][0] + "\"]" + " = " + str(i+1) + ",\n"
+	result += "\t\t\"" + "w" + "\": " + i[4] + ",\n"
+	result += "\t\t\"" + "h" + "\": " + i[5] + "\n"
+	result += "\t}"
 
-result +="}\n"
+	tmpFirstTime = False
 
-result += """
-function SheetInfo:getSheet()
-    return self.sheet;
-end
+result += "\n}"
 
-function SheetInfo:getFrameIndex(name)
-    return self.frameIndex[name];
-end
+print result
 
-return SheetInfo"""
-'''
-
-result += "}\n"
-'''newfilename = string.replace(filename, "txt", "lua")
+newfilename = string.replace(filename, "txt", "json")
 of = open(newfilename, "w")
 of.write(result)
-of.close()'''
+of.close()
