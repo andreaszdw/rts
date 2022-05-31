@@ -24,7 +24,7 @@ class MainWindow(pyglet.window.Window):
 
         # fps anzeigen?
         self.fps = True
-        self.fps_display = pyglet.clock.ClockDisplay()
+        #self.fps_display = pyglet.clock.ClockDisplay()
 
         #pyglet.resource.path = [os.path.abspath('..')]
         pyglet.resource.reindex()

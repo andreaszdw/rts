@@ -168,7 +168,7 @@ class Map(object):
 
         for v in values:
 
-            print v
+            print(v)
 
             if tile == v: return True
 

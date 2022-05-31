@@ -36,7 +36,7 @@ def animationByList(image=None, aniList=[]):
     effect_frames=[]
 
     tmpImageY = image.height
-    print tmpImageY
+    print(tmpImageY)
 
     for f in aniList:
 
@@ -77,19 +77,19 @@ class unitsList(object):
             tmpType = root.get('type')
             tmpUnit.type = tmpType
 
-            print tmpType
+            print(tmpType)
 
             # Einheitenname
             tmpName = root.get('name')
             tmpUnit.name = tmpName
 
-            print tmpName
+            print(tmpName)
 
             # Lebenspunkte
             tmpLife = root.get('lifepoints')
             tmpUnit.lifepoints = tmpLife
 
-            print tmpLife
+            print(tmpLife)
 
             # Einheitenimage
             tmpImage = root.find('image').text
@@ -103,15 +103,15 @@ class unitsList(object):
             
             # einzelne Animationen
             for anim in tmpAnimations:
-                print anim.get("name")
-                print anim.get("frames")
-                print anim.get("x")
-                print anim.get("y")
-                print anim.get("width")
-                print anim.get("height")
-                print anim.get("center_x")
-                print anim.get("center_y")
-                print anim.get("duration")
+                print(anim.get("name"))
+                print(anim.get("frames"))
+                print(anim.get("x"))
+                print(anim.get("y"))
+                print(anim.get("width"))
+                print(anim.get("height"))
+                print(anim.get("center_x"))
+                print(anim.get("center_y"))
+                print(anim.get("duration"))
 
             tmpUnit.animations = tmpAnimations
 
@@ -119,17 +119,17 @@ class unitsList(object):
             tmpProperties = root.find('properties')
 
             for prop in tmpProperties:
-                print prop.get("name")
+                print(prop.get("name"))
                 
                 if prop.get("possible") == "1":
-                    print "possible"
-                    print prop.get("speed")
+                    print("possible")
+                    print(prop.get("speed"))
                 else:
-                    print "not possible"
+                    print("not possible")
 
             # Angriff
             tmpAttack = root.find("weapon")
-            print tmpAttack.get("name")
+            print(tmpAttack.get("name"))
 
             
 

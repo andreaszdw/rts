@@ -38,7 +38,7 @@ class Infantry(gameobject.GameObject):
 
         for a in tmpData["animations"]:
 
-            print a["name"]
+            print(a["name"])
             self.animations.append(
             helper.animationByList(self.image, a["frames"]))
 
