@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmg5su8qkhc5t"]
+
+[ext_resource type="Texture2D" uid="uid://p6akufjhkq55" path="res://assets/sprites/turret1.png" id="1_6n874"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fyqm"]
+atlas = ExtResource("1_6n874")
+region = Rect2(0, 0, 24, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ooso"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fyqm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hx4vx"]
+size = Vector2(24, 38)
+
+[node name="TurretOne" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3ooso")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hx4vx")

@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://gtv0yssn8xc4"]
+
+[ext_resource type="Texture2D" uid="uid://dlh1qqohm1b7r" path="res://assets/sprites/tank_body1.png" id="1_5x0l7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtse7"]
+atlas = ExtResource("1_5x0l7")
+region = Rect2(0, 0, 52, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l88r2"]
+atlas = ExtResource("1_5x0l7")
+region = Rect2(0, 0, 52, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq1hi"]
+atlas = ExtResource("1_5x0l7")
+region = Rect2(52, 0, 52, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_trt26"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtse7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l88r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hq1hi")
+}],
+"loop": true,
+"name": &"move",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_agkpq"]
+size = Vector2(52, 62)
+
+[node name="TankBodyBig" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_trt26")
+animation = &"idle"
+frame_progress = 0.189824
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_agkpq")

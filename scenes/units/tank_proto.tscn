@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://bj6swy16tvfgt"]
+
+[ext_resource type="Texture2D" uid="uid://dlh1qqohm1b7r" path="res://assets/sprites/tank_body1.png" id="1_e0x32"]
+[ext_resource type="Script" path="res://scripts/units/tank_proto.gd" id="1_ot0dp"]
+[ext_resource type="Texture2D" uid="uid://p6akufjhkq55" path="res://assets/sprites/turret1.png" id="2_fjfvp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msq6x"]
+atlas = ExtResource("1_e0x32")
+region = Rect2(0, 0, 54, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dh8di"]
+atlas = ExtResource("1_e0x32")
+region = Rect2(0, 0, 54, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d6bi"]
+atlas = ExtResource("1_e0x32")
+region = Rect2(54, 0, 54, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sy8ub"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msq6x")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh8di")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5d6bi")
+}],
+"loop": true,
+"name": &"move",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x54mb"]
+atlas = ExtResource("2_fjfvp")
+region = Rect2(0, 0, 26, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1bhdo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x54mb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glan4"]
+size = Vector2(53, 64)
+
+[node name="TankProto" type="Area2D"]
+script = ExtResource("1_ot0dp")
+movement_speed = 400.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 62.38
+
+[node name="TankBody" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_sy8ub")
+animation = &"idle"
+frame_progress = 0.993836
+
+[node name="Turret" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1bhdo")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_glan4")
