@@ -1,3 +1,0 @@
-infantryWalk01 = 0 0 5 6
-infantryWalk02 = 6 0 5 6
-infantryWalk03 = 0 7 5 6

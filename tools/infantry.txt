@@ -1,3 +1,0 @@
-infWalk1 = 0 0 5 6
-infWalk2 = 6 0 5 6
-infWalk3 = 0 7 5 6
