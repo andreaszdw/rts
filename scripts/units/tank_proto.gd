@@ -1,7 +1,8 @@
 extends Area2D
 
 
-@export var movement_speed: float = 40.0
+var movement_speed: float = 30.0
+var turn_speed:float = 5
 @onready var navigation_agent: NavigationAgent2D = get_node("NavigationAgent2D")
 var movement_delta: float
 
@@ -30,10 +31,13 @@ func _physics_process(delta):
 		return
 	if navigation_agent.is_navigation_finished():
 		return
-
+		
 	movement_delta = movement_speed * delta
+	
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
+	
 	var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
+	rotation = lerpf(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
 	else:
