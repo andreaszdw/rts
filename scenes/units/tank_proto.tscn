@@ -64,8 +64,8 @@ radius = 62.38
 
 [node name="TankBody" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7amtc")
-animation = &"move"
-frame_progress = 0.0824611
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Turret" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nh8qp")

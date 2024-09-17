@@ -30,18 +30,30 @@ func _physics_process(delta):
 	if NavigationServer2D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
 		return
 	if navigation_agent.is_navigation_finished():
+		$TankBody.play("idle")
 		return
-		
+	
+	$TankBody.play("move")
 	movement_delta = movement_speed * delta
 	
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-	
 	var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
-	rotation = lerpf(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
+	# rotation = lerpf(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
+	rotation = lerp_angle(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(new_velocity)
 	else:
 		_on_velocity_computed(new_velocity)
+
+
+func lerp_angle(from, to, weight):
+	return from + short_angle_dist(from, to) * weight
+
+
+func short_angle_dist(from, to):
+	var max_angle = PI * 2
+	var difference = fmod(to - from, max_angle)
+	return fmod(2 * difference, max_angle) - difference
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
