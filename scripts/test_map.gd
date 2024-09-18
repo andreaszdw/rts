@@ -17,4 +17,7 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			$TankProto.set_movement_target(get_global_mouse_position())
+		
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			$TankProto.set_attack_target(get_global_mouse_position())
+			
