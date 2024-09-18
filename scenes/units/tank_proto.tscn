@@ -68,8 +68,10 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="Turret" type="AnimatedSprite2D" parent="."]
+position = Vector2(-8, 0)
 sprite_frames = SubResource("SpriteFrames_nh8qp")
 animation = &"idle"
+offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

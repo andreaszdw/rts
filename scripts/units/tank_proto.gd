@@ -5,6 +5,8 @@ var movement_speed: float = 30.0
 var turn_speed:float = 5
 @onready var navigation_agent: NavigationAgent2D = get_node("NavigationAgent2D")
 var movement_delta: float
+var attack_target: Vector2
+var has_attack_target: bool = false
 
 
 func _ready() -> void:
@@ -23,6 +25,11 @@ func _ready() -> void:
 
 func set_movement_target(movement_target: Vector2):
 	navigation_agent.set_target_position(movement_target)
+	
+
+func set_attack_target(target: Vector2):
+	has_attack_target = true
+	attack_target = target
 
 
 func _physics_process(delta):
@@ -34,6 +41,7 @@ func _physics_process(delta):
 		return
 	
 	$TankBody.play("move")
+	
 	movement_delta = movement_speed * delta
 	
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
@@ -44,6 +52,11 @@ func _physics_process(delta):
 		navigation_agent.set_velocity(new_velocity)
 	else:
 		_on_velocity_computed(new_velocity)
+
+	if has_attack_target:
+		$Turret.rotation = lerp_angle($Turret.rotation, position.angle_to_point(attack_target) - rotation, delta * turn_speed)
+	else:
+		$Turret.rotation = lerp_angle($Turret.rotation, 0, delta * turn_speed)
 
 
 func lerp_angle(from, to, weight):
