@@ -6,12 +6,15 @@ var _screen_height: int
 
 var _scroll_left: bool = false
 var _scroll_right: bool = false
-var _scroll_up:bool = false
-var _scroll_down:bool = false
-var _scroll_speed:int = 200
+var _scroll_up: bool = false
+var _scroll_down: bool = false
+var _scroll_speed: int = 200
 
-var _zooming:Vector2 = Vector2(0.0, 0.0)
-var _zoom_speed: int = 10
+var _min_zoom: float = 0.5
+var _max_zoom: float = 2.0
+var _zoom_factor: float = 0.1
+var _zoom_speed: float = 7.0
+var _zoom_level: float = 1.0
 
 var _focus: bool = true
 
@@ -50,15 +53,14 @@ func _process(delta):
 	if _focus:
 		_scroll(delta)
 		_zoom(delta)
-		_zooming = Vector2(0.0, 0.0)
 
 
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			_zooming = Vector2(1, 1)
+			_zoom_level += _zoom_factor
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			_zooming = Vector2(-1, -1)
+			_zoom_level -= _zoom_factor
 
 
 func _scroll(delta):
@@ -76,7 +78,10 @@ func _scroll(delta):
 
 
 func _zoom(delta):
-	zoom += _zooming * _zoom_speed * delta
+	_zoom_level = clamp(_zoom_level, _min_zoom, _max_zoom)
+	var tmp_zoom = lerpf(zoom.x, _zoom_level, _zoom_speed * delta)
+	zoom = Vector2(tmp_zoom, tmp_zoom)
+	
 
 
 func _resize():

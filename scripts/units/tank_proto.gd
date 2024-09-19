@@ -33,6 +33,7 @@ func _ready() -> void:
 
 func set_movement_target(movement_target: Vector2):
 	has_movement_target = true
+	has_attack_target = false
 	navigation_agent.set_target_position(movement_target)
 	
 
