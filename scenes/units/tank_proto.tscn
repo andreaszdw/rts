@@ -56,11 +56,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glan4"]
 size = Vector2(53, 64)
 
-[node name="TankProto" type="CharacterBody2D"]
+[node name="TankProto" type="Area2D"]
 script = ExtResource("1_ot0dp")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-radius = 35.25
+avoidance_enabled = true
+radius = 25.15
 
 [node name="TankBody" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7amtc")

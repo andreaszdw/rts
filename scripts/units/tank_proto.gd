@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Area2D
 
 
 var movement_speed: float = 30.0
@@ -69,8 +69,8 @@ func _physics_process(delta):
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	velocity = safe_velocity
-	move_and_slide()
+		global_position = global_position.move_toward(global_position + safe_velocity, movement_delta)
+		
 
 
 func _draw():
