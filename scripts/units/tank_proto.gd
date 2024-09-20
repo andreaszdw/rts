@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 
 var movement_speed: float = 30.0
@@ -22,13 +22,7 @@ func _ready() -> void:
 	
 	# Enable avoidance
 	NavigationServer2D.agent_set_avoidance_enabled(navigation_agent, true)
-	# Create avoidance callback
-	NavigationServer2D.agent_set_avoidance_callback(navigation_agent, Callable(self, "_avoidance_done"))
-
-	# Disable avoidance
-	#NavigationServer2D.agent_set_avoidance_enabled(navigation_agent, false)
-	# Delete avoidance callback
-	#NavigationServer2D.agent_set_avoidance_callback(navigation_agent, Callable())
+	
 
 
 func set_movement_target(movement_target: Vector2):
@@ -62,7 +56,7 @@ func _physics_process(delta):
 		# rotation = lerpf(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
 		rotation = lerp_angle(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
 		if navigation_agent.avoidance_enabled:
-			navigation_agent.set_velocity(new_velocity)
+			navigation_agent.velocity = new_velocity
 		else:
 			_on_velocity_computed(new_velocity)
 
@@ -75,7 +69,8 @@ func _physics_process(delta):
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	global_position = global_position.move_toward(global_position + safe_velocity, movement_delta)
+	velocity = safe_velocity
+	move_and_slide()
 
 
 func _draw():
