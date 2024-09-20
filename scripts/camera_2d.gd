@@ -58,9 +58,9 @@ func _process(delta):
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			_zoom_level += _zoom_factor
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_zoom_level -= _zoom_factor
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_level += _zoom_factor
 
 
 func _scroll(delta):

@@ -79,7 +79,8 @@ func _on_velocity_computed(safe_velocity: Vector2) -> void:
 
 
 func _draw():
-	draw_arc(Vector2(0, 0), attack_radius, 0, 360, 100, Color(1, 0, 0, 1), 5)
+	#draw_arc(Vector2(0, 0), attack_radius, 0, 360, 100, Color(1, 0, 0, 1), 5)
+	draw_circle(Vector2(0, 0), attack_radius, Color(1, 0, 0, 0.2))
 	
 
 
