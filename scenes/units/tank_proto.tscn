@@ -60,8 +60,13 @@ size = Vector2(53, 64)
 script = ExtResource("1_ot0dp")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 50.0
+target_desired_distance = 50.0
 avoidance_enabled = true
-radius = 25.15
+radius = 40.0
+time_horizon_agents = 0.39
+time_horizon_obstacles = 0.81
+debug_enabled = true
 
 [node name="TankBody" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7amtc")
@@ -75,6 +80,5 @@ animation = &"idle"
 offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_glan4")

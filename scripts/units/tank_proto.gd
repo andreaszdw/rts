@@ -8,7 +8,7 @@ var turret_speed: float = 1
 
 var attack_radius: float = 300
 
-var navigation_agent: NavigationAgent2D 
+var navigation_agent : NavigationAgent2D 
 var movement_delta: float
 var has_movement_target: bool = false
 
@@ -18,12 +18,10 @@ var has_attack_target: bool = false
 
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
+	
+	print(navigation_agent)
+	
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
-	
-	# Enable avoidance
-	NavigationServer2D.agent_set_avoidance_enabled(navigation_agent, true)
-	
-
 
 func set_movement_target(movement_target: Vector2):
 	has_movement_target = true
@@ -52,14 +50,9 @@ func _physics_process(delta):
 		movement_delta = movement_speed * delta
 		
 		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
-		# rotation = lerpf(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
-		rotation = lerp_angle(rotation, position.angle_to_point(next_path_position), delta * turn_speed)
-		if navigation_agent.avoidance_enabled:
-			navigation_agent.velocity = new_velocity
-		else:
-			_on_velocity_computed(new_velocity)
-
+		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_speed
+		navigation_agent.set_velocity(new_velocity)
+			
 	if has_attack_target:
 		$Turret.rotation = lerp_angle($Turret.rotation, position.angle_to_point(attack_target) - rotation, delta * turret_speed)
 	else:
@@ -69,14 +62,14 @@ func _physics_process(delta):
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-		global_position = global_position.move_toward(global_position + safe_velocity, movement_delta)
-		
+	
+	rotation = lerp_angle(rotation, position.angle_to_point(global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
+	global_position = global_position.move_toward(global_position + safe_velocity, movement_delta)
 
 
 func _draw():
-	#draw_arc(Vector2(0, 0), attack_radius, 0, 360, 100, Color(1, 0, 0, 1), 5)
-	draw_circle(Vector2(0, 0), attack_radius, Color(1, 0, 0, 0.2))
-	
+	#draw_circle(Vector2(0, 0), attack_radius, Color(1, 0, 0, 0.2))
+	pass
 
 
 func lerp_angle(from, to, weight):
