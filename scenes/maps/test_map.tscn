@@ -30,3 +30,9 @@ position = Vector2(664, 448)
 
 [node name="TankProto2" parent="." instance=ExtResource("2_jmuij")]
 position = Vector2(904, 512)
+
+[node name="TankProto3" parent="." instance=ExtResource("2_jmuij")]
+position = Vector2(856, 592)
+
+[node name="TankProto4" parent="." instance=ExtResource("2_jmuij")]
+position = Vector2(720, 544)

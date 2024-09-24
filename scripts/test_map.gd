@@ -13,6 +13,8 @@ func _ready() -> void:
 	NavigationServer2D.region_set_map(new_region_rid, default_map_rid)
 	units.append($TankProto)
 	units.append($TankProto2)
+	units.append($TankProto3)
+	units.append($TankProto4)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,5 +48,9 @@ func _input(event):
 			print(selected_units.size())
 
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			var counter = 0
 			for su in selected_units:
-				su.set_movement_target(get_global_mouse_position())
+				var offset = su.get_avoidance_radius() * counter
+				print(offset)
+				su.set_movement_target(get_global_mouse_position() + Vector2(offset, offset))
+				counter +=1

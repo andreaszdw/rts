@@ -98,3 +98,7 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	mouse_over = false
+
+
+func get_avoidance_radius():
+	return navigation_agent.radius
