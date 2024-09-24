@@ -2,7 +2,7 @@ extends Area2D
 
 
 var movement_speed: float = 30.0
-var turn_speed:float = 5
+var turn_speed: float = 5
 
 var turret_speed: float = 1
 
@@ -15,30 +15,32 @@ var has_movement_target: bool = false
 var attack_target: Vector2
 var has_attack_target: bool = false
 
+var path: Array
+
+var mouse_over: bool = false
+
 
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
-	
-	print(navigation_agent)
-	
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
+	self.connect("input_event", _input_event)
 
-func set_movement_target(movement_target: Vector2):
+func set_movement_target(movement_target: Vector2) -> void:
 	has_movement_target = true
 	has_attack_target = false
 	navigation_agent.set_target_position(movement_target)
 	
 
-func set_attack_target(target: Vector2):
+func set_attack_target(target: Vector2) -> void:
 	has_attack_target = true
 	attack_target = target
 
 
-func _physics_process(delta):
-	
-	if has_movement_target:		
+func _physics_process(delta):	
+	if has_movement_target:	
 		# Do not query when the map has never synchronized and is empty.
-		if NavigationServer2D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
+		if NavigationServer2D.map_get_iteration_id(
+			navigation_agent.get_navigation_map()) == 0:
 			return
 		if navigation_agent.is_navigation_finished():
 			$TankBody.play("idle")
@@ -54,20 +56,28 @@ func _physics_process(delta):
 		navigation_agent.set_velocity(new_velocity)
 			
 	if has_attack_target:
-		$Turret.rotation = lerp_angle($Turret.rotation, position.angle_to_point(attack_target) - rotation, delta * turret_speed)
+		$Turret.rotation = lerp_angle(
+			$Turret.rotation, position.angle_to_point(attack_target) - 
+			rotation, delta * turret_speed)
 	else:
 		$Turret.rotation = lerp_angle($Turret.rotation, 0, delta * turret_speed)
 	
 	queue_redraw()
 
 
+func _input_event(viewport, event, int):
+	pass
+
+
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	
-	rotation = lerp_angle(rotation, position.angle_to_point(global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
-	global_position = global_position.move_toward(global_position + safe_velocity, movement_delta)
+	if has_movement_target:
+		global_position = global_position.move_toward(
+			global_position + safe_velocity, movement_delta)	
+		rotation = lerp_angle(rotation, position.angle_to_point(
+			global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
 
 
-func _draw():
+func _draw() -> void:
 	#draw_circle(Vector2(0, 0), attack_radius, Color(1, 0, 0, 0.2))
 	pass
 
@@ -80,3 +90,11 @@ func short_angle_dist(from, to):
 	var max_angle = PI * 2
 	var difference = fmod(to - from, max_angle)
 	return fmod(2 * difference, max_angle) - difference
+
+
+func _on_mouse_entered() -> void:
+	mouse_over = true
+
+
+func _on_mouse_exited() -> void:
+	mouse_over = false
