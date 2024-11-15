@@ -54,8 +54,9 @@ func _physics_process(delta):
 		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_speed
 		navigation_agent.set_velocity(new_velocity)
-			
+	
 	if has_attack_target:
+		print("dd")
 		$Turret.rotation = lerp_angle(
 			$Turret.rotation, position.angle_to_point(attack_target) - 
 			rotation, delta * turret_speed)
