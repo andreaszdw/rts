@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://yir6sos5bh4l"]
+
+[ext_resource type="Script" path="res://scripts/units/tank.gd" id="1_6tiww"]
+[ext_resource type="Texture2D" uid="uid://dlh1qqohm1b7r" path="res://assets/sprites/tank_body1.png" id="1_453v6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwskx"]
+atlas = ExtResource("1_453v6")
+region = Rect2(0, 0, 64, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwbsp"]
+atlas = ExtResource("1_453v6")
+region = Rect2(0, 0, 64, 54)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8net3"]
+atlas = ExtResource("1_453v6")
+region = Rect2(0, 54, 64, 54)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2pi2c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwskx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwbsp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8net3")
+}],
+"loop": true,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pqme8"]
+size = Vector2(52, 50)
+
+[node name="Tank" type="CharacterBody2D"]
+input_pickable = true
+script = ExtResource("1_6tiww")
+
+[node name="TankBody" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2pi2c")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.322218
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pqme8")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 38.57
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

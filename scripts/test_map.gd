@@ -15,6 +15,7 @@ func _ready() -> void:
 	units.append($TankProto2)
 	units.append($TankProto3)
 	units.append($TankProto4)
+	units.append($Tank)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,5 +51,6 @@ func _input(event):
 			for su in selected_units:
 				su.set_attack_target(get_global_mouse_position())
 				var offset = su.get_avoidance_radius() * counter
+				print(get_global_mouse_position(), offset)
 				su.set_movement_target(get_global_mouse_position() + Vector2(offset, offset))
 				counter +=1

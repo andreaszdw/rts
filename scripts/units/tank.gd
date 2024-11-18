@@ -1,5 +1,4 @@
-extends Area2D
-
+extends CharacterBody2D
 
 var movement_speed: float = 30.0
 var turn_speed: float = 5
@@ -55,12 +54,12 @@ func _physics_process(delta):
 		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_speed
 		navigation_agent.set_velocity(new_velocity)
 		
-	if has_attack_target:
-		$Turret.rotation = lerp_angle(
-			$Turret.rotation, position.angle_to_point(attack_target) - 
-			rotation, delta * turret_speed)
-	else:
-		$Turret.rotation = lerp_angle($Turret.rotation, 0, delta * turret_speed)
+	#if has_attack_target:
+		#$Turret.rotation = lerp_angle(
+			#$Turret.rotation, position.angle_to_point(attack_target) - 
+			#rotation, delta * turret_speed)
+	#else:
+		#$Turret.rotation = lerp_angle($Turret.rotation, 0, delta * turret_speed)
 	
 	queue_redraw()
 
@@ -70,11 +69,13 @@ func _input_event(viewport, event, int):
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	if has_movement_target:
-		global_position = global_position.move_toward(
-			global_position + safe_velocity, movement_delta)	
-		rotation = lerp_angle(rotation, position.angle_to_point(
-			global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
+	velocity = safe_velocity
+	move_and_slide()
+	#if has_movement_target:
+		#global_position = global_position.move_toward(
+			#global_position + safe_velocity, movement_delta)	
+		#rotation = lerp_angle(rotation, position.angle_to_point(
+			#global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
 
 
 func _draw() -> void:

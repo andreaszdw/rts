@@ -60,19 +60,18 @@ size = Vector2(54, 43)
 script = ExtResource("1_ot0dp")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 35.0
-target_desired_distance = 35.0
-path_max_distance = 150.0
-simplify_path = true
+path_desired_distance = 10.0
+target_desired_distance = 20.0
+path_max_distance = 50.0
 avoidance_enabled = true
-radius = 32.0
-time_horizon_agents = 0.39
-time_horizon_obstacles = 0.81
+radius = 50.0
+time_horizon_agents = 5.53
+time_horizon_obstacles = 1.0
 debug_enabled = true
 
 [node name="TankBody" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7amtc")
-animation = &"idle"
+animation = &"move"
 autoplay = "idle"
 
 [node name="Turret" type="AnimatedSprite2D" parent="."]
