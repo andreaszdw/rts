@@ -22,7 +22,6 @@ var mouse_over: bool = false
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
-	self.connect("input_event", _input_event)
 
 func set_movement_target(movement_target: Vector2) -> void:
 	has_movement_target = true
@@ -45,7 +44,7 @@ func _physics_process(delta):
 			$TankBody.play("idle")
 			has_movement_target = false
 			return
-		
+					
 		$TankBody.play("move")
 		
 		movement_delta = movement_speed * delta
@@ -64,18 +63,14 @@ func _physics_process(delta):
 	queue_redraw()
 
 
-func _input_event(viewport, event, int):
-	pass
-
-
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
 	move_and_slide()
 	#if has_movement_target:
 		#global_position = global_position.move_toward(
 			#global_position + safe_velocity, movement_delta)	
-		#rotation = lerp_angle(rotation, position.angle_to_point(
-			#global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
+	rotation = lerp_angle(rotation, position.angle_to_point(
+			global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
 
 
 func _draw() -> void:

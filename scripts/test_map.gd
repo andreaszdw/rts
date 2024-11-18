@@ -11,15 +11,13 @@ func _ready() -> void:
 	var new_region_rid: RID = NavigationServer2D.region_create()
 	var default_map_rid: RID = get_world_2d().get_navigation_map()
 	NavigationServer2D.region_set_map(new_region_rid, default_map_rid)
-	units.append($TankProto)
-	units.append($TankProto2)
-	units.append($TankProto3)
-	units.append($TankProto4)
 	units.append($Tank)
+	units.append($Tank2)
+	units.append($Tank3)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
