@@ -57,15 +57,17 @@ animations = [{
 size = Vector2(54, 43)
 
 [node name="TankProto" type="Area2D"]
+disable_mode = 1
 script = ExtResource("1_ot0dp")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 10.0
-target_desired_distance = 20.0
-path_max_distance = 50.0
+path_desired_distance = 4.0
+target_desired_distance = 4.0
+path_max_distance = 10.0
+simplify_path = true
 avoidance_enabled = true
-radius = 50.0
-time_horizon_agents = 5.53
+radius = 27.0
+time_horizon_agents = 5.0
 time_horizon_obstacles = 1.0
 debug_enabled = true
 
@@ -81,7 +83,6 @@ animation = &"idle"
 offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_glan4")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

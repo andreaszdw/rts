@@ -70,6 +70,7 @@ func _input_event(viewport, event, int):
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	print("i")
 	if has_movement_target:
 		global_position = global_position.move_toward(
 			global_position + safe_velocity, movement_delta)	

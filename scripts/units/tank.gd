@@ -71,6 +71,7 @@ func _on_velocity_computed(safe_velocity: Vector2) -> void:
 			#global_position + safe_velocity, movement_delta)	
 	rotation = lerp_angle(rotation, position.angle_to_point(
 			global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
+	print(rotation)
 
 
 func _draw() -> void:
