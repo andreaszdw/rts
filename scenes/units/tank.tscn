@@ -38,7 +38,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pqme8"]
-size = Vector2(56, 48)
+size = Vector2(56, 46)
 
 [node name="Tank" type="Area2D"]
 script = ExtResource("1_6tiww")
@@ -50,17 +50,18 @@ autoplay = "idle"
 frame_progress = 0.322218
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_pqme8")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
 path_max_distance = 10.0
 simplify_path = true
+simplify_epsilon = 2.067
 avoidance_enabled = true
-radius = 32.0
+radius = 28.0
 time_horizon_agents = 3.0
-debug_enabled = true
+max_speed = 30.0
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

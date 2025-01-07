@@ -57,16 +57,18 @@ func _input(event):
 				#counter +=1
 
 func squareFormation(unit_array, mousepos):
+	var counter = 0	
 	var number_of_unit = unit_array.size()
 	var square_side_size = round(sqrt(number_of_unit))
-	var space_between_units = 75
-	var unit_pos = mousepos - space_between_units * Vector2(square_side_size/2,square_side_size/2)
+	var space_between_units = 100
+	var unit_pos = mousepos - (space_between_units * Vector2(square_side_size/2,square_side_size/2)) * counter
 	for x in unit_array:
 		x.set_movement_target(unit_pos)
 		unit_pos.x += space_between_units
 		if unit_pos.x > (mousepos.x + square_side_size * space_between_units / 2):
-			unit_pos.y += space_between_units
-			unit_pos.x = mousepos.x - space_between_units * square_side_size/2
+			unit_pos.y += space_between_units * counter
+			unit_pos.x = mousepos.x - (space_between_units * square_side_size/2) * counter
+		counter += 1
 
 func circleFormation(unit_array, mousepos):
 	var unit_pos = mousepos

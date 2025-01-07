@@ -1,6 +1,6 @@
 extends Area2D
 
-var movement_speed: float = 30.0
+var movement_speed: float = 130.0
 var turn_speed: float = 5
 
 var turret_speed: float = 1
@@ -23,12 +23,12 @@ var velocity_computed: Vector2
 
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
-	#navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
 
 func set_movement_target(movement_target: Vector2) -> void:
 	has_movement_target = true
 	has_attack_target = false
 	navigation_agent.set_target_position(movement_target)
+	print(navigation_agent.get_current_navigation_path())
 	
 
 func set_attack_target(target: Vector2) -> void:
@@ -52,8 +52,8 @@ func _physics_process(delta):
 		movement_delta = movement_speed * delta
 		
 		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-		var new_velocity: Vector2 = (global_position.direction_to(next_path_position) + velocity_computed) * movement_delta
-		#new_velocity += velocity_computed * movement_delta
+		var new_velocity: Vector2 = global_position.direction_to(next_path_position)  * movement_delta
+		new_velocity += velocity_computed * movement_delta
 		rotation = lerp_angle(rotation, position.angle_to_point(
 			global_position + new_velocity), movement_delta / movement_speed * turn_speed)
 		position += new_velocity
@@ -92,4 +92,4 @@ func _on_mouse_exited() -> void:
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	velocity_computed =Vector2.ZERO #= safe_velocity.normalized()
+	velocity_computed = safe_velocity.normalized()
