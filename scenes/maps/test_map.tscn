@@ -22,18 +22,6 @@ navigation_visibility_mode = 1
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="TileMapLayer"]
 navigation_polygon = SubResource("NavigationPolygon_8lmcp")
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="TileMapLayer"]
-vertices = PackedVector2Array(896, 256, 640, 256, 640, 384, 896, 384)
-affect_navigation_mesh = true
-carve_navigation_mesh = true
-
-[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="TileMapLayer"]
-vertices = PackedVector2Array(128, 128, 256, 128, 256, 384, 384, 384, 384, 512, 256, 512, 256, 640, 128, 640)
-
-[node name="NavigationObstacle2D3" type="NavigationObstacle2D" parent="TileMapLayer"]
-vertices = PackedVector2Array(384, 768, 640, 768, 640, 896, 384, 896)
-affect_navigation_mesh = true
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 script = ExtResource("4_kccs2")

@@ -18,6 +18,8 @@ var path: Array
 
 var mouse_over: bool = false
 
+var velocity_computed: Vector2
+
 
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
@@ -50,9 +52,8 @@ func _physics_process(delta):
 		movement_delta = movement_speed * delta
 		
 		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
-		print(new_velocity)
-		#navigation_agent.set_velocity(new_velocity)
+		var new_velocity: Vector2 = (global_position.direction_to(next_path_position) + velocity_computed) * movement_delta
+		#new_velocity += velocity_computed * movement_delta
 		rotation = lerp_angle(rotation, position.angle_to_point(
 			global_position + new_velocity), movement_delta / movement_speed * turn_speed)
 		position += new_velocity
@@ -65,17 +66,6 @@ func _physics_process(delta):
 		#$Turret.rotation = lerp_angle($Turret.rotation, 0, delta * turret_speed)
 	
 	queue_redraw()
-
-
-#func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	#velocity = safe_velocity
-	#move_and_slide()
-	##if has_movement_target:
-		##global_position = global_position.move_toward(
-			##global_position + safe_velocity, movement_delta)	
-	#rotation = lerp_angle(rotation, position.angle_to_point(
-			#global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
-	#print(rotation)
 
 
 func _draw() -> void:
@@ -101,5 +91,5 @@ func _on_mouse_exited() -> void:
 	mouse_over = false
 
 
-func get_avoidance_radius():
-	return navigation_agent.radius
+func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	velocity_computed =Vector2.ZERO #= safe_velocity.normalized()

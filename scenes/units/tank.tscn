@@ -59,7 +59,9 @@ path_max_distance = 10.0
 simplify_path = true
 avoidance_enabled = true
 radius = 32.0
+time_horizon_agents = 3.0
 debug_enabled = true
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_velocity_computed"]
