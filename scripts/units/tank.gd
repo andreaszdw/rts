@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Area2D
 
 var movement_speed: float = 30.0
 var turn_speed: float = 5
@@ -21,7 +21,7 @@ var mouse_over: bool = false
 
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
-	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
+	#navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
 
 func set_movement_target(movement_target: Vector2) -> void:
 	has_movement_target = true
@@ -50,8 +50,12 @@ func _physics_process(delta):
 		movement_delta = movement_speed * delta
 		
 		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
-		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_speed
-		navigation_agent.set_velocity(new_velocity)
+		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
+		print(new_velocity)
+		#navigation_agent.set_velocity(new_velocity)
+		rotation = lerp_angle(rotation, position.angle_to_point(
+			global_position + new_velocity), movement_delta / movement_speed * turn_speed)
+		position += new_velocity
 		
 	#if has_attack_target:
 		#$Turret.rotation = lerp_angle(
@@ -63,15 +67,15 @@ func _physics_process(delta):
 	queue_redraw()
 
 
-func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	velocity = safe_velocity
-	move_and_slide()
-	#if has_movement_target:
-		#global_position = global_position.move_toward(
-			#global_position + safe_velocity, movement_delta)	
-	rotation = lerp_angle(rotation, position.angle_to_point(
-			global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
-	print(rotation)
+#func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	#velocity = safe_velocity
+	#move_and_slide()
+	##if has_movement_target:
+		##global_position = global_position.move_toward(
+			##global_position + safe_velocity, movement_delta)	
+	#rotation = lerp_angle(rotation, position.angle_to_point(
+			#global_position + safe_velocity), movement_delta / movement_speed * turn_speed)
+	#print(rotation)
 
 
 func _draw() -> void:
