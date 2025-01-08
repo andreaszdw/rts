@@ -20,15 +20,18 @@ var mouse_over: bool = false
 
 var velocity_computed: Vector2
 
+var root: Node2D
+
 
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
+	root = get_tree().get_current_scene()
+
 
 func set_movement_target(movement_target: Vector2) -> void:
 	has_movement_target = true
 	has_attack_target = false
 	navigation_agent.set_target_position(movement_target)
-	print(navigation_agent.get_current_navigation_path())
 	
 
 func set_attack_target(target: Vector2) -> void:
@@ -52,6 +55,7 @@ func _physics_process(delta):
 		movement_delta = movement_speed * delta
 		
 		var next_path_position: Vector2 = navigation_agent.get_next_path_position()
+		check_move_target()
 		var new_velocity: Vector2 = global_position.direction_to(next_path_position)  * movement_delta
 		new_velocity += velocity_computed * movement_delta
 		rotation = lerp_angle(rotation, position.angle_to_point(
@@ -65,8 +69,18 @@ func _physics_process(delta):
 	#else:
 		#$Turret.rotation = lerp_angle($Turret.rotation, 0, delta * turret_speed)
 	
-	queue_redraw()
+	#queue_redraw()
 
+
+func check_move_target():
+	var space_state = get_world_2d().direct_space_state
+	var target_position = navigation_agent.get_next_path_position()
+	var query = PhysicsRayQueryParameters2D.create(position, target_position, collision_mask) #, [self])
+	print(collision_mask)
+	query.collide_with_areas = true
+	var result = space_state.intersect_ray(query)
+	print(result)
+	
 
 func _draw() -> void:
 	#draw_circle(Vector2(0, 0), attack_radius, Color(1, 0, 0, 0.2))

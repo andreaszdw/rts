@@ -22,9 +22,6 @@ navigation_visibility_mode = 1
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="TileMapLayer"]
 navigation_polygon = SubResource("NavigationPolygon_8lmcp")
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="TileMapLayer"]
-vertices = PackedVector2Array(896, 256, 640, 256, 640, 384, 896, 384)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 script = ExtResource("4_kccs2")

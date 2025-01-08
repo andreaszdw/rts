@@ -62,6 +62,7 @@ avoidance_enabled = true
 radius = 28.0
 time_horizon_agents = 3.0
 max_speed = 30.0
+debug_enabled = true
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
