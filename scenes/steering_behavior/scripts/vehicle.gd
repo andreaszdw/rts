@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 		return
 		
 	steering_force = Vector2(0, 0)
+	acceleration = Vector2(0, 0)
 	
 	if _behavior == "seek":
 		seek()
