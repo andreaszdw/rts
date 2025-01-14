@@ -18,8 +18,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var counter: int = 0
 	for v in vehicles:
-		if counter % 2 == 0:
+		if counter % 3 == 0:
+			v.steering("flee", get_global_mouse_position())
+		elif counter % 2 == 0:
 			v.steering("arrive", get_global_mouse_position())
 		else:
 			v.steering("seek", get_global_mouse_position())
 		counter += 1
+		#v.steering("flee", get_global_mouse_position())

@@ -25,15 +25,31 @@ func _process(delta: float) -> void:
 	steering_force = Vector2(0, 0)
 	acceleration = Vector2(0, 0)
 	
+	stay_within_rect(get_viewport_rect())
+	
 	if _behavior == "seek":
 		seek()
 	
+	if _behavior == "flee":
+		flee()
+		
 	if _behavior == "arrive":
 		arrive()
 
 
+func steering(behavior, target=Vector2(0, 0), path=Array()):
+	_behavior = behavior
+	_target = target
+	_path = path
+
+
 func seek():
 	var desired = (_target - position).normalized() * max_speed
+	calc_steering(desired)
+
+
+func flee():
+	var desired = (position - _target).normalized() * max_speed
 	calc_steering(desired)
 
 
@@ -56,7 +72,17 @@ func calc_steering(desired):
 	rotation = velocity.angle()
 
 
-func steering(behavior, target=Vector2(0, 0), path=Array()):
-	_behavior = behavior
-	_target = target
-	_path = path
+func stay_within_rect(rect: Rect2):
+	var desired = velocity
+	
+	if position.x < rect.position.x + 180:
+		desired = Vector2(max_speed, velocity.y)
+	if position.x > rect.end.x - 180:
+		desired = Vector2(-max_speed, velocity.y)
+		
+	if position.y < rect.position.y + 180:
+		desired = Vector2(velocity.x, max_speed)
+	if position.y > rect.end.y - 180:
+		desired = Vector2(velocity.x, -max_speed)
+	
+	calc_steering(desired)
