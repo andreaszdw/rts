@@ -76,7 +76,6 @@ func check_move_target():
 	var space_state = get_world_2d().direct_space_state
 	var target_position = navigation_agent.get_next_path_position()
 	var query = PhysicsRayQueryParameters2D.create(position, target_position, collision_mask) #, [self])
-	print(collision_mask)
 	query.collide_with_areas = true
 	var result = space_state.intersect_ray(query)
 	print(result)
