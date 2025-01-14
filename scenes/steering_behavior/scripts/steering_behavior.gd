@@ -8,7 +8,7 @@ var vehicles: Array
 func _ready() -> void:
 	for i in range(10):
 		var v = vehicle.instantiate()
-		v.init(Vector2(100 + i * 20, 100 + i * 25))
+		v.init(Vector2(100 + i * 20, 100 + i * 25), vehicles)
 	
 		vehicles.append(v)
 		add_child(v)
@@ -18,11 +18,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var counter: int = 0
 	for v in vehicles:
-		if counter % 3 == 0:
-			v.steering("flee", get_global_mouse_position())
-		elif counter % 2 == 0:
-			v.steering("arrive", get_global_mouse_position())
-		else:
-			v.steering("seek", get_global_mouse_position())
-		counter += 1
-		#v.steering("flee", get_global_mouse_position())
+		#if counter % 3 == 0:
+			#v.steering("flee", get_global_mouse_position())
+		#elif counter % 2 == 0:
+			#v.steering("arrive", get_global_mouse_position())
+		#else:
+			#v.steering("seek", get_global_mouse_position())
+		#counter += 1
+		v.steering("arrive", get_global_mouse_position())

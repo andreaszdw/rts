@@ -8,14 +8,18 @@ var steering_force: Vector2 = Vector2(0, 0)
 var slowing_distance: float = 50
 var max_speed: float = 3
 var max_force: float = 0.05
+var desired_separation: float = 100
 
 var _behavior: String = "idle"
 var _target: Vector2 = Vector2(0, 0)
 var _path: Array
 
+var _vehicles: Array
 
-func init(pos: Vector2 = Vector2(0, 0)):
+
+func init(pos, vehicles):
 	position = pos
+	_vehicles = vehicles
 
 
 func _process(delta: float) -> void:
@@ -25,7 +29,7 @@ func _process(delta: float) -> void:
 	steering_force = Vector2(0, 0)
 	acceleration = Vector2(0, 0)
 	
-	stay_within_rect(get_viewport_rect())
+	#stay_within_rect(get_viewport_rect())
 	
 	if _behavior == "seek":
 		seek()
@@ -35,6 +39,8 @@ func _process(delta: float) -> void:
 		
 	if _behavior == "arrive":
 		arrive()
+		
+	separate()
 
 
 func steering(behavior, target=Vector2(0, 0), path=Array()):
@@ -61,7 +67,27 @@ func arrive():
 	var desired = (clipped_speed / distance) * target_offset
 	calc_steering(desired)
 
-
+func separate():
+	var sum: Vector2 = Vector2(0, 0)
+	var counter: int = 0
+	for v in _vehicles:
+		if v == self:
+			continue
+		var d = position.distance_to(v.position)
+		if d > 0 && d < desired_separation:
+			var diff = position - v.position
+			diff.normalized()
+			diff /= d
+			sum += diff
+			counter += 1
+	if counter > 0:
+		sum /= counter
+		sum = sum.normalized() * max_speed
+		calc_steering(sum - velocity)
+		return
+	
+	calc_steering(sum)
+	
 func calc_steering(desired):
 	steering_force = desired - velocity
 	steering_force = steering_force.limit_length(max_force)
