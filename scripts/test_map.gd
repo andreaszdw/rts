@@ -11,11 +11,6 @@ func _ready() -> void:
 	var new_region_rid: RID = NavigationServer2D.region_create()
 	var default_map_rid: RID = get_world_2d().get_navigation_map()
 	NavigationServer2D.region_set_map(new_region_rid, default_map_rid)
-	units.append($Tank)
-	units.append($Tank2)
-	units.append($Tank3)
-	units.append($Tank4)
-	units.append($Tank5)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,17 +29,11 @@ func _input(event):
 		
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if shift_pressed:
-				for u in units:
-					if u.mouse_over:
-						if not selected_units.has(u):
-							selected_units.append(u)
+			var click_pos = get_global_mouse_position()
+			for unit in get_tree().get_nodes_in_group("units"):
+				print(click_pos)
+				unit.set_movement_target(click_pos)
 			
-			else:
-				selected_units.clear()
-				for u in units:
-					if u.mouse_over:
-						selected_units.append(u)
 
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			squareFormation(selected_units, get_global_mouse_position())

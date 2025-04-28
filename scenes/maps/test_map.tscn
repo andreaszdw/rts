@@ -2,8 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://cwpfc7gd1xfn3" path="res://scenes/maps/test_set.tres" id="1_v37s5"]
 [ext_resource type="Script" path="res://scripts/test_map.gd" id="1_w42su"]
+[ext_resource type="PackedScene" uid="uid://dbd6281io8cod" path="res://scenes/units/tank_character.tscn" id="4_ien5i"]
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="4_kccs2"]
-[ext_resource type="PackedScene" uid="uid://yir6sos5bh4l" path="res://scenes/units/tank.tscn" id="4_ocdfi"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8lmcp"]
 vertices = PackedVector2Array(409, 537, 615, 409, 921, 409, 665, 743, 359, 743, 2023, 25, 2023, 2023, 665, 921, 25, 2023, 359, 921, 409, 359, 615, 231, 921, 231, 25, 25, 281, 103, 281, 537, 281, 665, 281, 359, 103, 665, 103, 103)
@@ -19,27 +19,27 @@ tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAA
 tile_set = ExtResource("1_v37s5")
 navigation_visibility_mode = 1
 
+[node name="TankCharacter" parent="TileMapLayer" instance=ExtResource("4_ien5i")]
+position = Vector2(728, 504)
+
+[node name="TankCharacter2" parent="TileMapLayer" instance=ExtResource("4_ien5i")]
+position = Vector2(496, 336)
+
+[node name="TankCharacter3" parent="TileMapLayer" instance=ExtResource("4_ien5i")]
+position = Vector2(872, 160)
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="TileMapLayer"]
 navigation_polygon = SubResource("NavigationPolygon_8lmcp")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="TileMapLayer"]
 vertices = PackedVector2Array(896, 256, 640, 256, 640, 384, 896, 384)
 
+[node name="TankCharacter4" parent="TileMapLayer" instance=ExtResource("4_ien5i")]
+position = Vector2(624, 160)
+
+[node name="TankCharacter5" parent="TileMapLayer" instance=ExtResource("4_ien5i")]
+position = Vector2(560, 512)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 script = ExtResource("4_kccs2")
-
-[node name="Tank" parent="." instance=ExtResource("4_ocdfi")]
-position = Vector2(736, 664)
-
-[node name="Tank2" parent="." instance=ExtResource("4_ocdfi")]
-position = Vector2(736, 496)
-
-[node name="Tank3" parent="." instance=ExtResource("4_ocdfi")]
-position = Vector2(736, 608)
-
-[node name="Tank4" parent="." instance=ExtResource("4_ocdfi")]
-position = Vector2(736, 440)
-
-[node name="Tank5" parent="." instance=ExtResource("4_ocdfi")]
-position = Vector2(736, 552)

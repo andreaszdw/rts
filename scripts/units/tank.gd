@@ -26,6 +26,7 @@ var root: Node2D
 func _ready() -> void:
 	navigation_agent = get_node("NavigationAgent2D")
 	root = get_tree().get_current_scene()
+	add_to_group("units")
 
 
 func set_movement_target(movement_target: Vector2) -> void:
