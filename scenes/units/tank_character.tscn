@@ -51,3 +51,4 @@ animation = &"idle"
 shape = SubResource("RectangleShape2D_svorr")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 20.0

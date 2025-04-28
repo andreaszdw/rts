@@ -6,9 +6,14 @@
 texture = ExtResource("1_a5bue")
 texture_region_size = Vector2i(128, 128)
 0:1/0 = 0
+0:1/0/custom_data_0 = "water"
 1:0/0 = 0
+1:0/0/custom_data_0 = "sand"
 0:0/0 = 0
+0:0/0/custom_data_0 = "grass"
 
 [resource]
 tile_size = Vector2i(128, 128)
+custom_data_layer_0/name = "ground"
+custom_data_layer_0/type = 4
 sources/1 = SubResource("TileSetAtlasSource_ld8dr")
