@@ -39,9 +39,9 @@ func _input(event):
 				flow_field.generate(tile_pos)
 				queue_redraw()
 
-			# for unit in get_tree().get_nodes_in_group("units"):
-			# 	print(click_pos)
-			# 	unit.set_movement_target(click_pos)			
+			for unit in get_tree().get_nodes_in_group("units"):
+				print(click_pos)
+				unit.set_movement_target(click_pos)			
 
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			squareFormation(selected_units, get_global_mouse_position())

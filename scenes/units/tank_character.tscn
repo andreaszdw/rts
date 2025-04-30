@@ -51,4 +51,9 @@ animation = &"idle"
 shape = SubResource("RectangleShape2D_svorr")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-radius = 20.0
+target_desired_distance = 104.96
+avoidance_enabled = true
+radius = 90.27
+time_horizon_agents = 5.0
+time_horizon_obstacles = 5.0
+max_speed = 10.0
